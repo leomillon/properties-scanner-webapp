@@ -1,9 +1,0 @@
-com/github/leomillon/properties/utils/PropertiesHolder.class
-com/github/leomillon/properties/model/AnalyzedProperties.class
-com/github/leomillon/properties/model/PropertyHistory.class
-com/github/leomillon/properties/controller/PropertiesAnalyzerController.class
-com/github/leomillon/properties/model/Property.class
-com/github/leomillon/properties/service/PropertiesLoader.class
-com/github/leomillon/properties/PropertiesAnalyzerApp.class
-com/github/leomillon/properties/model/PropertiesFile.class
-com/github/leomillon/properties/model/PropertyReader.class
