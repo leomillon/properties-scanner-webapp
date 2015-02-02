@@ -7,7 +7,7 @@
         <title>Properties Analyzer</title>
 
         <!-- Bootstrap -->
-        <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+        <link th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap-theme.min.css" rel="stylesheet"/>
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -15,6 +15,15 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <style>
+            .popover {
+                max-width: 600px;
+            }
+
+            .property-value-cell code {
+                word-break: break-all;
+            }
+        </style>
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -36,8 +45,33 @@
                         </thead>
                         <tbody>
                             <tr data-th-each="propertyReader : ${analyzedProperties.propertyReaders}">
-                                <td><code th:text="${propertyReader.key}">config.property.first</code></td>
-                                <td><code th:text="${propertyReader.lastValue}">value1</code></td>
+                                <td class="property-key-cell"><code th:text="${propertyReader.key}">config.property.first</code></td>
+                                <td class="property-value-cell">
+                                    <span class="history">
+                                        <button type="button" class="btn btn-xs btn-default" data-toggle="popover" title="Value history"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>
+                                        <div class="history-holder" style="display: none;">
+                                            <div class="history-table">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Order</th>
+                                                            <th>File name</th>
+                                                            <th>Value</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr data-th-each="historyEntry,iterStat : ${propertyReader.history}">
+                                                            <td th:text="${iterStat.count}">1</td>
+                                                            <td><code th:text="${historyEntry.key.name}">file-name.properties</code></td>
+                                                            <td class="property-value-cell"><code th:text="${historyEntry.value}">value1</code></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <code th:text="${propertyReader.lastValue}">value1</code>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -49,7 +83,20 @@
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
             <!-- Include all compiled plugins (below), or include individual files as needed -->
-            <script th:src="@{/js/bootstrap.min.js}"></script>
+            <script th:src="@{/js/bootstrap.min.js}" src="../static/js/bootstrap.min.js"></script>
+            <script>
+                var popoverFallback = function() {
+                    return $(this).siblings().filter('.history-holder').first().html();
+                };
+                $('.history button').popover(
+                        {
+                            html: true,
+                            content: popoverFallback,
+                            trigger: 'focus',
+                            placement: 'auto'
+                        }
+                );
+            </script>
         </div>
     </body>
 </html>

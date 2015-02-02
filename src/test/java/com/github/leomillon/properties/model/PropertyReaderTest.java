@@ -42,6 +42,26 @@ public class PropertyReaderTest {
         assertThat(propertyReader.getLastValue()).isEqualTo(file2Value);
     }
 
+    @Test
+    public void should_get_ordered_history() throws Exception {
+
+        // Given
+        Property property = new Property("propertyKey");
+        String file1Value = "file1Value";
+        PropertiesFile file1 = propFile("prop1");
+        property.addValue(file1Value, file1);
+        String file2Value = "file2Value";
+        PropertiesFile file2 = propFile("prop2");
+        property.addValue(file2Value, file2);
+
+        // When
+        PropertyReader propertyReader = new PropertyReader(property, fileOrder(file2, file1));
+
+        // Then
+        assertThat(propertyReader.getHistory().keySet())
+                .containsExactly(file2, file1);
+    }
+
     private static LinkedList<PropertiesFile> fileOrder(PropertiesFile... propertiesFiles) {
         LinkedList<PropertiesFile> fileOrder = new LinkedList<>();
         Collections.addAll(fileOrder, propertiesFiles);

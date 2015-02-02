@@ -2,10 +2,12 @@ package com.github.leomillon.properties.model;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 import static java.util.Objects.*;
 
@@ -24,6 +26,17 @@ public class PropertyReader {
     @Nonnull
     public String getKey() {
         return property.getKey();
+    }
+
+    @Nonnull
+    public TreeMap<PropertiesFile, String> getHistory() {
+        TreeMap<PropertiesFile, String> treeMap = new TreeMap<>(fileOrderComparator());
+        treeMap.putAll(property.getHistory());
+        return treeMap;
+    }
+
+    private Comparator<PropertiesFile> fileOrderComparator() {
+        return (o1, o2) -> Integer.compare(filesOrder.indexOf(o1), filesOrder.indexOf(o2));
     }
 
     @Nullable
