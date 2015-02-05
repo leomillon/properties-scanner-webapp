@@ -35,7 +35,27 @@
         </nav>
         <div class="container-fluid">
             <div class="row">
+                <div class="col-md-4">
+                    <h2>Analyzed files</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Order</th>
+                                <th>File name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-th-each="file,iterStat : ${analyzedProperties.filesOrder}">
+                                <td th:text="${iterStat.count}">1</td>
+                                <td><code th:text="${file.name}">file-name.properties</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
+                    <h2>Result</h2>
                     <table class="table table-striped">
                         <thead>
                             <tr>

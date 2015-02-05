@@ -16,6 +16,10 @@ public class AnalyzedProperties {
     private Collection<Property> properties = new ArrayList<>();
     private LinkedList<PropertiesFile> filesOrder = new LinkedList<>();
 
+    public LinkedList<PropertiesFile> getFilesOrder() {
+        return filesOrder;
+    }
+
     public void setFilesOrder(@Nonnull LinkedList<PropertiesFile> filesOrder) {
         this.filesOrder = new LinkedList<>(requireNonNull(filesOrder));
     }
