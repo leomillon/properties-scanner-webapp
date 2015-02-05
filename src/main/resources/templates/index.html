@@ -48,7 +48,7 @@
                                 <td class="property-key-cell"><code th:text="${propertyReader.key}">config.property.first</code></td>
                                 <td class="property-value-cell">
                                     <span class="history">
-                                        <button type="button" class="btn btn-xs btn-default" data-toggle="popover" title="Value history"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>
+                                        <button type="button" class="btn btn-xs btn-default" data-toggle="popover" title="Value history"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> <span data-th-text="(${#maps.size(propertyReader.history)})"></span></button>
                                         <div class="history-holder" style="display: none;">
                                             <div class="history-table">
                                                 <table class="table table-striped">
@@ -70,7 +70,7 @@
                                             </div>
                                         </div>
                                     </span>
-                                    <code th:text="${propertyReader.lastValue}">value1</code>
+                                    <code class="last-value" th:attr="data-prop-key=${propertyReader.key}" th:text="${propertyReader.lastValue}">value1</code>
                                 </td>
                             </tr>
                         </tbody>
@@ -96,6 +96,22 @@
                             placement: 'auto'
                         }
                 );
+                $('.last-value').each(function() {
+                    var propValue = $(this).text();
+                    //console.log("PropValue = " + propValue);
+                    if (propValue) {
+                        var matches = propValue.match(/^\$\{(.*)}$/);
+                        //console.log("matches = " + matches);
+                        if (matches) {
+                            var matchedKey = matches[1];
+                            //console.log('matched key = ' + matchedKey);
+                            if (matchedKey) {
+                                var destPropValue = $(".last-value[data-prop-key='" + matchedKey + "']").text();
+                                $(this).tooltip({title: destPropValue});
+                            }
+                        }
+                    }
+                });
             </script>
         </div>
     </body>

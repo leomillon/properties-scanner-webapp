@@ -27,6 +27,10 @@ public class PropertiesAnalyzerController {
             return propertiesLoader.loadPropertiesFromFiles(
                     "/Users/leomillon/Downloads/properties/file1.properties",
                     "/Users/leomillon/Downloads/properties/file2.properties"
+                    /*"/Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties",
+                    "/Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties",
+                    "/Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-sc.properties",
+                    "/Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-1-psw1.properties"*/
             );
         } catch (IOException e) {
             e.printStackTrace();
