@@ -40,12 +40,20 @@
                         <thead>
                             <tr>
                                 <th>Property key</th>
+                                <th>Definition state</th>
                                 <th>Property value</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr data-th-each="propertyReader : ${analyzedProperties.propertyReaders}">
                                 <td class="property-key-cell"><code th:text="${propertyReader.key}">config.property.first</code></td>
+                                <td class="property-state-cell">
+                                    <div th:switch="${propertyReader.state.code}">
+                                        <span th:case="'DUPLICATED'" class="label label-danger">DUPLICATED</span>
+                                        <span th:case="'OVERRIDEN'" class="label label-warning">OVERRIDEN</span>
+                                        <span th:case="'UNIQUE'" class="label label-success">UNIQUE</span>
+                                    </div>
+                                </td>
                                 <td class="property-value-cell">
                                     <span class="history">
                                         <button type="button" class="btn btn-xs btn-default" data-toggle="popover" title="Value history"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> <span data-th-text="(${#maps.size(propertyReader.history)})"></span></button>

@@ -13,6 +13,16 @@ import static java.util.Objects.*;
 
 public class PropertyReader {
 
+    public enum State {
+        UNIQUE,
+        OVERRIDEN,
+        DUPLICATED;
+
+        public String getCode() {
+            return this.name();
+        }
+    }
+
     @Nonnull
     private Property property;
     @Nonnull
@@ -37,6 +47,26 @@ public class PropertyReader {
 
     private Comparator<PropertiesFile> fileOrderComparator() {
         return (o1, o2) -> Integer.compare(filesOrder.indexOf(o1), filesOrder.indexOf(o2));
+    }
+
+    public State getState() {
+        if (property.getHistory().size() == 1) {
+            return State.UNIQUE;
+        }
+        for (Map.Entry<PropertiesFile, String> currentHistoryEntry : property.getHistory().entrySet()) {
+            for (Map.Entry<PropertiesFile, String> historyEntry : property.getHistory().entrySet()) {
+                if (hasDuplicatedValue(currentHistoryEntry, historyEntry)) {
+                    return State.DUPLICATED;
+                }
+            }
+        }
+        return State.OVERRIDEN;
+    }
+
+    private static boolean hasDuplicatedValue(Map.Entry<PropertiesFile, String> firstHistoryEntry,
+                                              Map.Entry<PropertiesFile, String> secondHistoryEntry) {
+        return !firstHistoryEntry.getKey().equals(secondHistoryEntry.getKey())
+                && Objects.equals(firstHistoryEntry.getValue(), secondHistoryEntry.getValue());
     }
 
     @Nullable
