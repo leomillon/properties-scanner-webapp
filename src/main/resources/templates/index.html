@@ -104,20 +104,38 @@
                             placement: 'auto'
                         }
                 );
-                $('.last-value').each(function() {
-                    var propValue = $(this).text();
-                    //console.log("PropValue = " + propValue);
+
+                function getValueForKey(key) {
+                    return $(".last-value[data-prop-key='" + key + "']").text()
+                }
+
+                function findConcreteValue(propValue) {
                     if (propValue) {
-                        var matches = propValue.match(/^\$\{(.*)}$/);
-                        //console.log("matches = " + matches);
-                        if (matches) {
-                            var matchedKey = matches[1];
-                            //console.log('matched key = ' + matchedKey);
-                            if (matchedKey) {
-                                var destPropValue = $(".last-value[data-prop-key='" + matchedKey + "']").text();
-                                $(this).tooltip({title: destPropValue});
-                            }
+                        var regex = /\$\{(.*?)}/g;
+                        var matches=[];
+                        var match = regex.exec(propValue);
+                        while (match != null) {
+                            matches.push(match[1]);
+                            match = regex.exec(propValue);
                         }
+                        //console.log("matches = " + matches);
+                        for (var index in matches) {
+                            var matchedKey = matches[index];
+                            var matchedConcretValue = findConcreteValue(getValueForKey(matchedKey));
+                            propValue = propValue.replace(new RegExp("\\${" + matchedKey + "}", "g"), matchedConcretValue);
+                        }
+                    }
+                    return propValue;
+                }
+
+                $('.last-value').each(function() {
+                    var currentElement = $(this);
+                    var propValue = currentElement.text();
+                    var concreteValue = findConcreteValue(propValue);
+                    if (propValue != concreteValue) {
+                        currentElement
+                                .attr("title", concreteValue)
+                                .tooltip();
                     }
                 });
             </script>
