@@ -1,128 +1,98 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:fragment="htmlhead">
-        <meta charset="utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title>Properties Analyzer</title>
-
-        <!-- Bootstrap -->
-        <link th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap-theme.min.css" rel="stylesheet"/>
-        <!-- App styles -->
-        <link th:href="@{/css/styles.css}" href="../static/css/styles.css" rel="stylesheet"/>
-
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-    </head>
-    <body>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Properties analyzer</a>
-                </div>
-            </div>
-        </nav>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4">
-                    <h2>Analyzed files</h2>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Order</th>
-                                <th>File name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr data-th-each="file,iterStat : ${analyzedFiles}">
-                                <td th:text="${iterStat.count}">1</td>
-                                <td><code th:text="${file.name}">file-name.properties</code></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>Result</h2>
-                    <p><code th:text="${#sets.size(analyzedProperties.keys)}">X</code> properties analized.</p>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Property key</th>
-                                <th>Definition state</th>
-                                <th>Property value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr data-th-each="property : ${analyzedProperties}">
-                                <td class="property-key-cell"><code th:text="${property.key}">config.property.first</code></td>
-                                <td class="property-state-cell">
-                                    <div th:switch="${property.state.code}">
-                                        <span th:case="'DUPLICATED'" class="label label-danger">DUPLICATED</span>
-                                        <span th:case="'OVERRIDEN'" class="label label-warning">OVERRIDEN</span>
-                                        <span th:case="'UNIQUE'" class="label label-success">UNIQUE</span>
+<head th:include="fragments/layout :: head"></head>
+<body>
+<nav th:replace="fragments/layout :: header"></nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Analyzed files</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Order</th>
+                        <th>File name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-th-each="file,iterStat : ${analyzedFiles}">
+                        <td th:text="${iterStat.count}">1</td>
+                        <td><code th:text="${file.name}">file-name.properties</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Result</h2>
+            <p><code th:text="${#sets.size(analyzedProperties.keys)}">X</code> properties analized.</p>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Property key</th>
+                        <th>Definition state</th>
+                        <th>Property value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-th-each="property : ${analyzedProperties}">
+                        <td class="property-key-cell"><code th:text="${property.key}">config.property.first</code></td>
+                        <td class="property-state-cell">
+                            <div th:switch="${property.state.code}">
+                                <span th:case="'DUPLICATED'" class="label label-danger">DUPLICATED</span>
+                                <span th:case="'OVERRIDEN'" class="label label-warning">OVERRIDEN</span>
+                                <span th:case="'UNIQUE'" class="label label-success">UNIQUE</span>
+                            </div>
+                        </td>
+                        <td class="property-value-cell">
+                            <span class="history">
+                                <button type="button" class="btn btn-xs btn-default" data-toggle="popover" title="Value history"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> <span data-th-text="(${#maps.size(property.history)})"></span></button>
+                                <div class="history-holder" style="display: none;">
+                                    <div class="history-table">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Order</th>
+                                                    <th>File name</th>
+                                                    <th>Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr data-th-each="historyEntry,iterStat : ${property.history}">
+                                                    <td th:text="${iterStat.count}">1</td>
+                                                    <td><code th:text="${historyEntry.key.name}">file-name.properties</code></td>
+                                                    <td class="property-value-cell"><code th:text="${historyEntry.value}">value1</code></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </td>
-                                <td class="property-value-cell">
-                                    <span class="history">
-                                        <button type="button" class="btn btn-xs btn-default" data-toggle="popover" title="Value history"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> <span data-th-text="(${#maps.size(property.history)})"></span></button>
-                                        <div class="history-holder" style="display: none;">
-                                            <div class="history-table">
-                                                <table class="table table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Order</th>
-                                                            <th>File name</th>
-                                                            <th>Value</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr data-th-each="historyEntry,iterStat : ${property.history}">
-                                                            <td th:text="${iterStat.count}">1</td>
-                                                            <td><code th:text="${historyEntry.key.name}">file-name.properties</code></td>
-                                                            <td class="property-value-cell"><code th:text="${historyEntry.value}">value1</code></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </span>
-                                    <code class="last-value" th:attr="data-prop-key=${property.key}" th:text="${property.interpretedValue}">value1</code>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div th:include="fragments/footer :: copy"></div>
-                </div>
-            </div>
+                                </div>
+                            </span>
+                            <code class="last-value" th:attr="data-prop-key=${property.key}" th:text="${property.interpretedValue}">value1</code>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+    </div>
+</div>
+<footer th:replace="fragments/layout :: footer"></footer>
 
-        <div th:fragment="scripts">
-            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-            <!-- Include all compiled plugins (below), or include individual files as needed -->
-            <script th:src="@{/js/bootstrap.min.js}" src="../static/js/bootstrap.min.js"></script>
-            <script>
-                var popoverFallback = function() {
-                    return $(this).siblings().filter('.history-holder').first().html();
-                };
-                $('.history button').popover(
-                        {
-                            html: true,
-                            content: popoverFallback,
-                            placement: 'auto'
-                        }
-                );
-            </script>
-        </div>
-    </body>
+<div>
+    <div th:replace="fragments/layout :: scripts"></div>
+    <script>
+        var popoverFallback = function() {
+            return $(this).siblings().filter('.history-holder').first().html();
+        };
+        $('.history button').popover(
+                {
+                    html: true,
+                    content: popoverFallback,
+                    placement: 'auto'
+                }
+        );
+    </script>
+</div>
+</body>
 </html>
