@@ -45,7 +45,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-th-each="file,iterStat : ${analyzedProperties.filesOrder}">
+                            <tr data-th-each="file,iterStat : ${analyzedFiles}">
                                 <td th:text="${iterStat.count}">1</td>
                                 <td><code th:text="${file.name}">file-name.properties</code></td>
                             </tr>
@@ -65,10 +65,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-th-each="propertyReader : ${analyzedProperties.propertyReaders}">
-                                <td class="property-key-cell"><code th:text="${propertyReader.key}">config.property.first</code></td>
+                            <tr data-th-each="property : ${analyzedProperties}">
+                                <td class="property-key-cell"><code th:text="${property.key}">config.property.first</code></td>
                                 <td class="property-state-cell">
-                                    <div th:switch="${propertyReader.state.code}">
+                                    <div th:switch="${property.state.code}">
                                         <span th:case="'DUPLICATED'" class="label label-danger">DUPLICATED</span>
                                         <span th:case="'OVERRIDEN'" class="label label-warning">OVERRIDEN</span>
                                         <span th:case="'UNIQUE'" class="label label-success">UNIQUE</span>
@@ -76,7 +76,7 @@
                                 </td>
                                 <td class="property-value-cell">
                                     <span class="history">
-                                        <button type="button" class="btn btn-xs btn-default" data-toggle="popover" title="Value history"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> <span data-th-text="(${#maps.size(propertyReader.history)})"></span></button>
+                                        <button type="button" class="btn btn-xs btn-default" data-toggle="popover" title="Value history"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> <span data-th-text="(${#maps.size(property.history)})"></span></button>
                                         <div class="history-holder" style="display: none;">
                                             <div class="history-table">
                                                 <table class="table table-striped">
@@ -88,7 +88,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr data-th-each="historyEntry,iterStat : ${propertyReader.history}">
+                                                        <tr data-th-each="historyEntry,iterStat : ${property.history}">
                                                             <td th:text="${iterStat.count}">1</td>
                                                             <td><code th:text="${historyEntry.key.name}">file-name.properties</code></td>
                                                             <td class="property-value-cell"><code th:text="${historyEntry.value}">value1</code></td>
@@ -98,7 +98,7 @@
                                             </div>
                                         </div>
                                     </span>
-                                    <code class="last-value" th:attr="data-prop-key=${propertyReader.key}" th:text="${propertyReader.lastValue}">value1</code>
+                                    <code class="last-value" th:attr="data-prop-key=${property.key}" th:text="${property.interpretedValue}">value1</code>
                                 </td>
                             </tr>
                         </tbody>
@@ -124,40 +124,6 @@
                             placement: 'auto'
                         }
                 );
-
-                function getValueForKey(key) {
-                    return $(".last-value[data-prop-key='" + key + "']").text()
-                }
-
-                function findConcreteValue(propValue) {
-                    if (propValue) {
-                        var regex = /\$\{(.*?)}/g;
-                        var matches=[];
-                        var match = regex.exec(propValue);
-                        while (match != null) {
-                            matches.push(match[1]);
-                            match = regex.exec(propValue);
-                        }
-                        //console.log("matches = " + matches);
-                        for (var index in matches) {
-                            var matchedKey = matches[index];
-                            var matchedConcretValue = findConcreteValue(getValueForKey(matchedKey));
-                            propValue = propValue.replace(new RegExp("\\${" + matchedKey + "}", "g"), matchedConcretValue);
-                        }
-                    }
-                    return propValue;
-                }
-
-                $('.last-value').each(function() {
-                    var currentElement = $(this);
-                    var propValue = currentElement.text();
-                    var concreteValue = findConcreteValue(propValue);
-                    if (propValue != concreteValue) {
-                        currentElement
-                                .attr("title", concreteValue)
-                                .tooltip();
-                    }
-                });
             </script>
         </div>
     </body>
