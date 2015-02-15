@@ -18,7 +18,7 @@ import java.util.Optional;
 public class PropertiesLoader {
 
     @Nonnull
-    public HierarchicalRegister<SimpleProperty> loadPropertiesFromFiles(String... filePaths) throws IOException {
+    public HierarchicalRegister<SimpleProperty> loadPropertiesFromFiles(Iterable<String> filePaths) throws IOException {
 
         return Loader.loadPropertiesInOrder(filePaths);
     }

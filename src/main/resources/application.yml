@@ -1,3 +1,5 @@
 spring.thymeleaf.cache: false
 
 logging.level.com.github.leomillon.properties: DEBUG
+
+spring.profiles.active: files
