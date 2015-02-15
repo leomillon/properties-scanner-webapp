@@ -5,3 +5,8 @@
 .property-value-cell code {
     word-break: break-all;
 }
+
+.centered-footer {
+    text-align: center;
+    padding: 10px;
+}
