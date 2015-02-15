@@ -1,8 +1,130 @@
 filegroups:
   groups:
+#    - name: sample
+#      filePaths:
+#        - /path/to/sample.properties
+    # devs
+    - name: leomillon
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-sc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-1-psw2.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/leomillon.properties
+    # valid SC psw1
+    - name: cms-valid-psw1
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-sc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-psw1.properties
     - name: cms-valid-1-psw1
       filePaths:
         - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
         - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
         - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-sc.properties
         - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-1-psw1.properties
+    - name: cms-valid-2-psw1
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-sc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-2-psw1.properties
+    - name: cms-valid-3-psw1
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-sc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-3-psw1.properties
+    # valid DC psw1
+    - name: cms-valid-dist-psw1
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-dc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-dist-psw1.properties
+    - name: cms-valid-dist-1-psw1
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-dc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-dist-1-psw1.properties
+    - name: cms-valid-dist-2-psw1
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-dc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-dist-2-psw1.properties
+    - name: cms-valid-dist-3-psw1
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-dc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-3-psw1.properties
+    # valid SC psw2
+    - name: cms-valid-psw2
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-sc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-psw2.properties
+    - name: cms-valid-1-psw2
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-sc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-1-psw2.properties
+    - name: cms-valid-2-psw2
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-sc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-2-psw2.properties
+    - name: cms-valid-3-psw2
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-sc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-3-psw2.properties
+    # valid DC psw2
+    - name: cms-valid-dist-psw2
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-dc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-dist-psw2.properties
+    - name: cms-valid-dist-1-psw2
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-dc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-dist-1-psw2.properties
+    - name: cms-valid-dist-2-psw2
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-dc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-dist-2-psw2.properties
+    - name: cms-valid-dist-3-psw2
+      filePaths:
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/common.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/common/services-mocks-directories.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/ezy-dc.properties
+        - /Users/leomillon/repos/ekino/apps/frontoffice/src/main/resources/config/users/cms-valid-3-psw2.properties
