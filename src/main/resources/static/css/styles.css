@@ -1,0 +1,7 @@
+.popover {
+    max-width: 600px;
+}
+
+.property-value-cell code {
+    word-break: break-all;
+}
