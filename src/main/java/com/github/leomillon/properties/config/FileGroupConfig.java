@@ -1,6 +1,6 @@
 package com.github.leomillon.properties.config;
 
-import com.github.leomillon.properties.model.FilePathsGroup;
+import com.github.leomillon.properties.model.FileLocationsGroup;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -11,14 +11,14 @@ import java.util.List;
 @ConfigurationProperties(prefix = "filegroups")
 public class FileGroupConfig {
 
-    private List<FilePathsGroup> groups;
+    private List<FileLocationsGroup> groups;
 
     @Nonnull
-    public List<FilePathsGroup> getGroups() {
+    public List<FileLocationsGroup> getGroups() {
         return groups;
     }
 
-    public void setGroups(List<FilePathsGroup> groups) {
+    public void setGroups(List<FileLocationsGroup> groups) {
         this.groups = groups;
     }
 }

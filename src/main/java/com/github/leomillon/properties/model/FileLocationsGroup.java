@@ -4,11 +4,11 @@ import com.google.common.base.MoreObjects;
 
 import java.util.List;
 
-public class FilePathsGroup {
+public class FileLocationsGroup {
 
     private String name;
 
-    private List<String> filePaths;
+    private List<String> fileLocations;
 
     public String getName() {
         return name;
@@ -18,19 +18,19 @@ public class FilePathsGroup {
         this.name = name;
     }
 
-    public List<String> getFilePaths() {
-        return filePaths;
+    public List<String> getFileLocations() {
+        return fileLocations;
     }
 
-    public void setFilePaths(List<String> filePaths) {
-        this.filePaths = filePaths;
+    public void setFileLocations(List<String> fileLocations) {
+        this.fileLocations = fileLocations;
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("name", name)
-                .add("filePaths", filePaths)
+                .add("fileLocations", fileLocations)
                 .toString();
     }
 }

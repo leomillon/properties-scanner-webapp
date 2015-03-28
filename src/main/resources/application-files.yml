@@ -1,5 +1,5 @@
 filegroups:
   groups:
     - name: sample
-      filePaths:
+      fileLocations:
         - /path/to/sample.properties

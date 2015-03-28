@@ -1,7 +1,7 @@
 package com.github.leomillon.properties.controller;
 
 import com.github.leomillon.properties.model.AnalyzedProperty;
-import com.github.leomillon.properties.model.FilePathsGroup;
+import com.github.leomillon.properties.model.FileLocationsGroup;
 import com.github.leomillon.properties.scanner.HierarchicalRegister;
 import com.github.leomillon.properties.scanner.Register;
 import com.github.leomillon.properties.scanner.SimpleProperty;
@@ -38,7 +38,7 @@ public class PropertiesAnalyzerController {
 
     @RequestMapping(value = "analyze/{groupName}", method = RequestMethod.GET)
     public ModelAndView analyze(@PathVariable String groupName) throws IOException {
-        Optional<FilePathsGroup> optionalGroup = fileGroupService.getGroupForName(groupName);
+        Optional<FileLocationsGroup> optionalGroup = fileGroupService.getGroupForName(groupName);
         if (optionalGroup.isPresent()) {
             HierarchicalRegister<SimpleProperty> loadedProperties = loadProperties(optionalGroup.get());
             return new ModelAndView(
@@ -52,9 +52,9 @@ public class PropertiesAnalyzerController {
         throw new IllegalArgumentException("No group found for name '" + groupName + "'");
     }
 
-    private HierarchicalRegister<SimpleProperty> loadProperties(FilePathsGroup filePathsGroup) throws IOException {
-        LOGGER.debug("File group to load : {}", filePathsGroup);
-        return propertiesLoader.loadPropertiesFromFiles(filePathsGroup.getFilePaths());
+    private HierarchicalRegister<SimpleProperty> loadProperties(FileLocationsGroup fileLocationsGroup) throws IOException {
+        LOGGER.debug("File group to load : {}", fileLocationsGroup);
+        return propertiesLoader.loadPropertiesFromFiles(fileLocationsGroup.getFileLocations());
     }
 
     private Register<AnalyzedProperty> analyzeProperties(HierarchicalRegister<SimpleProperty> register) {
