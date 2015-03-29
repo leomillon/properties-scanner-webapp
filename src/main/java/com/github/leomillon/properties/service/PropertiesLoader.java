@@ -6,6 +6,8 @@ import com.github.leomillon.properties.scanner.HierarchicalRegister;
 import com.github.leomillon.properties.scanner.HistorizedProperty;
 import com.github.leomillon.properties.scanner.Register;
 import com.github.leomillon.properties.scanner.SimpleProperty;
+import com.github.leomillon.properties.scanner.descriptor.PropFileDescriptor;
+import com.github.leomillon.properties.scanner.descriptor.PropFilePathDescriptor;
 import com.github.leomillon.properties.scanner.utils.Loader;
 import com.github.leomillon.properties.scanner.utils.ValueParser;
 import org.springframework.stereotype.Service;
@@ -13,14 +15,23 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class PropertiesLoader {
 
     @Nonnull
-    public HierarchicalRegister<SimpleProperty> loadPropertiesFromFiles(Iterable<String> filePaths) throws IOException {
+    public HierarchicalRegister<SimpleProperty> loadPropertiesFromFiles(@Nonnull Iterable<String> fileLocations) throws IOException {
 
-        return Loader.loadPropertiesInOrder(filePaths);
+        return Loader.loadPropertiesInOrder(fileLocationsToDescriptors(fileLocations));
+    }
+
+    @Nonnull
+    private static Iterable<PropFileDescriptor> fileLocationsToDescriptors(@Nonnull Iterable<String> fileLocations) {
+        return StreamSupport.stream(fileLocations.spliterator(), false)
+                .map(PropFilePathDescriptor::new)
+                .collect(Collectors.toList());
     }
 
     @Nonnull
