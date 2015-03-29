@@ -13,13 +13,21 @@ import com.github.leomillon.properties.scanner.utils.ValueParser;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Resource;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
 public class PropertiesLoader {
+
+    @Resource
+    private FileRetrieverService fileRetrieverService;
 
     @Nonnull
     public HierarchicalRegister<SimpleProperty> loadPropertiesFromFiles(@Nonnull Iterable<String> fileLocations) throws IOException {
@@ -28,10 +36,30 @@ public class PropertiesLoader {
     }
 
     @Nonnull
-    private static Iterable<PropFileDescriptor> fileLocationsToDescriptors(@Nonnull Iterable<String> fileLocations) {
+    private Iterable<PropFileDescriptor> fileLocationsToDescriptors(@Nonnull Iterable<String> fileLocations) {
         return StreamSupport.stream(fileLocations.spliterator(), false)
-                .map(PropFilePathDescriptor::new)
+                .map(locationToDescriptor())
                 .collect(Collectors.toList());
+    }
+
+    @Nonnull
+    private Function<String, PropFileDescriptor> locationToDescriptor() {
+        return fileLocation -> fileRetrieverService.isValidUrl(fileLocation)
+                ? new PropFileUrlDescriptor(fileLocation, urlToInputStream())
+                : new PropFilePathDescriptor(fileLocation);
+    }
+
+    @Nonnull
+    private Function<String, InputStream> urlToInputStream() {
+        return url -> {
+            String contentFromUrl = null;
+            try {
+                contentFromUrl = fileRetrieverService.getContentFromUrl(url);
+            } catch (URISyntaxException | IOException e) {
+                throw new IllegalStateException("Unable to retrieve file from url", e);
+            }
+            return new ByteArrayInputStream(contentFromUrl.getBytes());
+        };
     }
 
     @Nonnull

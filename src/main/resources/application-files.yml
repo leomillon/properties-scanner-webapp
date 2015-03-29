@@ -1,5 +1,15 @@
-filegroups:
-  groups:
-    - name: sample
-      fileLocations:
-        - /path/to/sample.properties
+# Sample
+#
+#filerepository:
+#  privateToken: your_secret_gitlab_token
+#
+#filegroups:
+#  groups:
+#    - name: localFilesSample
+#      fileLocations:
+#        - /path/to/sample1.properties
+#        - /path/to/sample2.properties
+#    - name: removeFilesSample
+#      fileLocations:
+#        - http://url.to.file/sample1.properties
+#        - http://url.to.file/sample2.properties
