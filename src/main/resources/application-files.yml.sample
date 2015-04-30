@@ -1,0 +1,7 @@
+filerepository:
+  privateToken: your_secret_gitlab_token
+
+filegroups:
+  groupDefinitionLocations:
+    - /path/to/file1.json
+    - /path/to/file2.json
