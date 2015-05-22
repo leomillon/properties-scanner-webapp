@@ -1,5 +1,12 @@
 package com.github.leomillon.properties.controller;
 
+import java.io.IOException;
+import java.util.Optional;
+import javax.annotation.Resource;
+import com.google.common.collect.ImmutableMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.leomillon.properties.model.AnalyzedProperty;
 import com.github.leomillon.properties.model.FileLocationsGroup;
 import com.github.leomillon.properties.scanner.HierarchicalRegister;
@@ -7,18 +14,11 @@ import com.github.leomillon.properties.scanner.Register;
 import com.github.leomillon.properties.scanner.SimpleProperty;
 import com.github.leomillon.properties.service.FileGroupService;
 import com.github.leomillon.properties.service.PropertiesLoader;
-import com.google.common.collect.ImmutableMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.annotation.Resource;
-import java.io.IOException;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -36,9 +36,9 @@ public class PropertiesAnalyzerController {
         return new ModelAndView("index", "groups", fileGroupService.getGroups());
     }
 
-    @RequestMapping(value = "analyze/{groupName}", method = RequestMethod.GET)
-    public ModelAndView analyze(@PathVariable String groupName) throws IOException {
-        Optional<FileLocationsGroup> optionalGroup = fileGroupService.getGroupForName(groupName);
+    @RequestMapping(value = "analyze/{groupId}", method = RequestMethod.GET)
+    public ModelAndView analyze(@PathVariable String groupId) throws IOException {
+        Optional<FileLocationsGroup> optionalGroup = fileGroupService.getGroupById(groupId);
         if (optionalGroup.isPresent()) {
             HierarchicalRegister<SimpleProperty> loadedProperties = loadProperties(optionalGroup.get());
             return new ModelAndView(
@@ -49,7 +49,7 @@ public class PropertiesAnalyzerController {
                             .build()
             );
         }
-        throw new IllegalArgumentException("No group found for name '" + groupName + "'");
+        throw new IllegalArgumentException("No group found for id '" + groupId + "'");
     }
 
     private HierarchicalRegister<SimpleProperty> loadProperties(FileLocationsGroup fileLocationsGroup) throws IOException {

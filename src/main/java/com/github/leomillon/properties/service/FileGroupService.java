@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import com.github.leomillon.properties.config.FileGroupConfig;
 import com.github.leomillon.properties.model.FileLocationsGroup;
@@ -39,11 +40,11 @@ public class FileGroupService {
     }
 
     @Nonnull
-    public Optional<FileLocationsGroup> getGroupForName(@Nonnull String name) {
-        requireNonNull(name, "A group name is required.");
+    public Optional<FileLocationsGroup> getGroupById(@Nonnull String id) {
+        requireNonNull(id, "A group id is required.");
         List<FileLocationsGroup> groups = getGroups();
         return groups.stream()
-                .filter(group -> name.equalsIgnoreCase(group.getName()))
+                .filter(group -> id.equalsIgnoreCase(group.getId()))
                 .findAny();
     }
 
@@ -91,12 +92,20 @@ public class FileGroupService {
             FileLocationsGroup group = new FileLocationsGroup();
             group.setName(tree.getName());
             group.setFileLocations(currentFileLocations);
+            group.setId(generateId(currentFileLocations));
             return Collections.singletonList(group);
         }
 
         List<FileLocationsGroup> groups = new ArrayList<>();
         tree.getChildren().forEach(child -> groups.addAll(treeToFileLocationGroup(child, currentFileLocations)));
         return groups;
+    }
+
+    @Nonnull
+    private static String generateId(@Nonnull Iterable<String> locations) {
+        StringBuilder stringBuilder = new StringBuilder();
+        locations.forEach(stringBuilder::append);
+        return DigestUtils.md5Hex(stringBuilder.toString());
     }
 
     @Nonnull
