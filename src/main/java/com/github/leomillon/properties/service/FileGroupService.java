@@ -59,7 +59,7 @@ public class FileGroupService {
                 LOGGER.debug("Tree from JSON file {} : {}", groupDefinitionLocation, tree);
                 trees.add(tree);
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("Unable to read JSON at location :  {}", groupDefinitionLocation, e);
             }
         });
 
