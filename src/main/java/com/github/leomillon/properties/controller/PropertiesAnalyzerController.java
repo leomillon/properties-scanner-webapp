@@ -1,9 +1,14 @@
 package com.github.leomillon.properties.controller;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import javax.annotation.Nonnull;
 import javax.annotation.Resource;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Ordering;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import static java.util.stream.Collectors.*;
+
 @Controller
 @RequestMapping("/")
 public class PropertiesAnalyzerController {
@@ -33,7 +40,17 @@ public class PropertiesAnalyzerController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index() {
-        return new ModelAndView("index", "groups", fileGroupService.getGroups());
+        return new ModelAndView("index", "groups", sortByName(fileGroupService.getGroups()));
+    }
+
+    @Nonnull
+    private static List<FileLocationsGroup> sortByName(Collection<FileLocationsGroup> groups) {
+        return groups.stream().sorted(groupByNameComparator()).collect(toList());
+    }
+
+    @Nonnull
+    private static Comparator<FileLocationsGroup> groupByNameComparator() {
+        return Ordering.natural().onResultOf(FileLocationsGroup::getName);
     }
 
     @RequestMapping(value = "analyze/{groupId}", method = RequestMethod.GET)
