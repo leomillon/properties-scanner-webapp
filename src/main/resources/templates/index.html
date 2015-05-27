@@ -9,7 +9,7 @@
             <h2>Groups of properties</h2>
             <ul data-th-each="group : ${groups}">
                 <li>
-                    <a th:href="@{/analyze/{groupName}(groupName=${group.name})}"
+                    <a th:href="@{/analyze/{groupId}(groupId=${group.id})}"
                        th:text="${group.name}"
                        href="/analyze/test">test</a>
                 </li>
