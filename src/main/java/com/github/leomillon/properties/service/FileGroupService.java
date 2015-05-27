@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nonnull;
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
@@ -32,8 +35,31 @@ public class FileGroupService {
     @Resource
     private FileGroupConfig fileGroupConfig;
 
+    private final Map<String, FileLocationsGroup> cachedGroups = new HashMap<>();
+
+    @PostConstruct
+    private void initGroups() {
+        if (useCachedGroups()) {
+            LOGGER.debug("Groups definition locations are loaded and cached.");
+            fillCachedGroups();
+        }
+    }
+
+    private void fillCachedGroups() {
+        groupsFromJson().forEach(group -> cachedGroups.put(group.getId(), group));
+    }
+
+    private boolean useCachedGroups() {
+        return fileGroupConfig.isCacheGroupDefinitions();
+    }
+
     @Nonnull
     public Collection<FileLocationsGroup> getGroups() {
+        if (useCachedGroups()) {
+            LOGGER.debug("Getting groups from cache.");
+            return groupsFromCache();
+        }
+        LOGGER.debug("Getting groups from json files.");
         return groupsFromJson();
     }
 
@@ -43,6 +69,11 @@ public class FileGroupService {
         return getGroups().stream()
                 .filter(group -> id.equalsIgnoreCase(group.getId()))
                 .findAny();
+    }
+
+    @Nonnull
+    private Collection<FileLocationsGroup> groupsFromCache() {
+        return cachedGroups.values();
     }
 
     @Nonnull

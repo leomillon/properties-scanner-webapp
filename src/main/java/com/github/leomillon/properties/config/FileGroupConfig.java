@@ -15,6 +15,8 @@ public class FileGroupConfig {
 
     private List<String> groupDefinitionLocations;
 
+    private boolean cacheGroupDefinitions = true;
+
     @Nullable
     public List<String> getGroupDefinitionLocations() {
         return groupDefinitionLocations;
@@ -27,5 +29,13 @@ public class FileGroupConfig {
     @Nonnull
     public List<String> getGroupDefinitionLocationsOrEmpty() {
         return Optional.ofNullable(groupDefinitionLocations).orElseGet(Collections::emptyList);
+    }
+
+    public boolean isCacheGroupDefinitions() {
+        return cacheGroupDefinitions;
+    }
+
+    public void setCacheGroupDefinitions(boolean cacheGroupDefinitions) {
+        this.cacheGroupDefinitions = cacheGroupDefinitions;
     }
 }
