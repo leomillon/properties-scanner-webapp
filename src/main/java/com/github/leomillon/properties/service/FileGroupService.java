@@ -33,17 +33,14 @@ public class FileGroupService {
     private FileGroupConfig fileGroupConfig;
 
     @Nonnull
-    public List<FileLocationsGroup> getGroups() {
-        List<FileLocationsGroup> allGroups = new ArrayList<>(fileGroupConfig.getGroupsOrEmpty());
-        allGroups.addAll(groupsFromJson());
-        return allGroups;
+    public Collection<FileLocationsGroup> getGroups() {
+        return groupsFromJson();
     }
 
     @Nonnull
     public Optional<FileLocationsGroup> getGroupById(@Nonnull String id) {
         requireNonNull(id, "A group id is required.");
-        List<FileLocationsGroup> groups = getGroups();
-        return groups.stream()
+        return getGroups().stream()
                 .filter(group -> id.equalsIgnoreCase(group.getId()))
                 .findAny();
     }

@@ -1,8 +1,7 @@
 package com.github.leomillon.properties.model;
 
-import com.google.common.base.MoreObjects;
-
 import java.util.List;
+import com.google.common.base.MoreObjects;
 
 public class FileLocationsGroup {
 
