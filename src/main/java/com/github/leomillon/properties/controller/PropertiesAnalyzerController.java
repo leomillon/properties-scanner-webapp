@@ -14,13 +14,16 @@ import org.slf4j.LoggerFactory;
 
 import com.github.leomillon.properties.model.AnalyzedProperty;
 import com.github.leomillon.properties.model.FileLocationsGroup;
+import com.github.leomillon.properties.model.json.FileLocations;
 import com.github.leomillon.properties.scanner.HierarchicalRegister;
 import com.github.leomillon.properties.scanner.Register;
 import com.github.leomillon.properties.scanner.SimpleProperty;
 import com.github.leomillon.properties.service.FileGroupService;
 import com.github.leomillon.properties.service.PropertiesLoader;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -57,16 +60,25 @@ public class PropertiesAnalyzerController {
     public ModelAndView analyze(@PathVariable String groupId) throws IOException {
         Optional<FileLocationsGroup> optionalGroup = fileGroupService.getGroupById(groupId);
         if (optionalGroup.isPresent()) {
-            HierarchicalRegister<SimpleProperty> loadedProperties = loadProperties(optionalGroup.get());
-            return new ModelAndView(
-                    "analyze",
-                    ImmutableMap.<String, Object>builder()
-                            .put("analyzedFiles", loadedProperties.getFilesOrder())
-                            .put("analyzedProperties", analyzeProperties(loadedProperties))
-                            .build()
-            );
+            return viewForGroup(optionalGroup.get());
         }
         throw new IllegalArgumentException("No group found for id '" + groupId + "'");
+    }
+
+    @RequestMapping(value = "analyze", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ModelAndView analyze(@RequestBody FileLocations fileLocations) throws IOException {
+        return viewForGroup(fileGroupService.groupFromLocations(fileLocations.getLocations()));
+    }
+
+    private ModelAndView viewForGroup(FileLocationsGroup group) throws IOException {
+        HierarchicalRegister<SimpleProperty> loadedProperties = loadProperties(group);
+        return new ModelAndView(
+                "analyze",
+                ImmutableMap.<String, Object>builder()
+                        .put("analyzedFiles", loadedProperties.getFilesOrder())
+                        .put("analyzedProperties", analyzeProperties(loadedProperties))
+                        .build()
+        );
     }
 
     private HierarchicalRegister<SimpleProperty> loadProperties(FileLocationsGroup fileLocationsGroup) throws IOException {

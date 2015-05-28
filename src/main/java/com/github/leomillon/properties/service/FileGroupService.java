@@ -72,6 +72,16 @@ public class FileGroupService {
     }
 
     @Nonnull
+    public FileLocationsGroup groupFromLocations(List<String> locations) {
+        FileLocationsGroup fileLocationsGroup = new FileLocationsGroup();
+        fileLocationsGroup.setFileLocations(locations);
+        String id = generateId(locations);
+        fileLocationsGroup.setId(id);
+        fileLocationsGroup.setName("temp-" + id);
+        return fileLocationsGroup;
+    }
+
+    @Nonnull
     private Collection<FileLocationsGroup> groupsFromCache() {
         return cachedGroups.values();
     }
